@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		{% if title %}
+		<title>{{title}} - Flaskfolio</title>
+		{% else %}
+		<title>Flask</title>
+		{% endif %}
+		{% block head %}
+
+		{% endblock %}
+	</head>
+	<body>
+		<nav>
+			<a href="/home">
+				<img src="" alt="Logo for flaskfolio">
+			</a>
+			<a href="/portfolios">Portfolios!</a>
+			<a href="/resumes">Resumes!</a>
+			<a href="/donate">Pay for my college!</a>
+		</nav>
+	</body>
+</html>
