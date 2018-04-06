@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>
+	{% if name %}
+	Hi, {{ name }}
+	{% else %}
 	Welcome to my webiste!
+	{% endif %}
 <h2>
 
 <p>
-	Here you can create a Resume to suit your needs
+	<i> Create a Resume </i> <b> Click 'MAKE!' to start </b>
 </p>
+<button type="button" name="button" id="start_button">MAKE!</button>
 {% endblock %}

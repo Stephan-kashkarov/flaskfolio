@@ -9,16 +9,16 @@ def home():
 
 @app.route('/login')
 def login():
-	return
+	return render_template('login.html', title='Login')
 
 @app.route('/portfolios')
 def portfolios():
-	return render_template('portfolio.html', title='portfolios')
+	return render_template('portfolio.html', title='Portfolios')
 
 @app.route('/resumes')
 def resumes():
-	return render_template('resumes.html', title='resumes')
+	return render_template('resumes.html', title='Resumes')
 
 @app.route('/donate')
 def donate():
-	return render_template('donate.html', title='donate')
+	return render_template('donate.html', title='Donate')
