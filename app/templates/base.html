@@ -15,12 +15,21 @@
 	</head>
 	<body>
 		<nav>
+			{% if img_url %}
 			<a href="/home">
-				<img src="" alt="Logo for flaskfolio">
+				<img src={{img_url}} alt="Logo for flaskfolio">
 			</a>
+			{% else %}
+			Flaskfolio:
+			<a href="/home">home</a>
+			{% endif %}
 			<a href="/portfolios">Portfolios!</a>
 			<a href="/resumes">Resumes!</a>
 			<a href="/donate">Pay for my college!</a>
+			<div class="login" style="float: right;">
+				<a href="/login">Log-in</a>
+				<a href="/regester">Regester</a>
+			</div>
 			<hr>
 		</nav>
 		<main>
