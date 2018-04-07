@@ -21,7 +21,7 @@
 			</a>
 			{% else %}
 			Flaskfolio:
-			<a href="/home">home</a>
+			<a href="/home">Home!</a>
 			{% endif %}
 			<a href="/portfolios">Portfolios!</a>
 			<a href="/resumes">Resumes!</a>
@@ -30,8 +30,17 @@
 				<a href="/login">Log-in</a>
 				<a href="/regester">Regester</a>
 			</div>
-			<hr>
 		</nav>
+		<hr>
+		{% with messeges = get_flashed_messages() %}
+		{% if messeges %}
+		<ul>
+			{% for messege in messeges %}
+			<li>{{ messege }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
 		<main>
 			{% block content %}
 			{% endblock %}
