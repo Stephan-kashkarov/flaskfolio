@@ -16,19 +16,19 @@
 	<body>
 		<nav>
 			{% if img_url %}
-			<a href="/home">
+			<a href="{{url_for(home)}}">
 				<img src={{img_url}} alt="Logo for flaskfolio">
 			</a>
 			{% else %}
 			Flaskfolio:
-			<a href="/home">Home!</a>
+			<a href="{{url_for(home)}}">Home!</a>
 			{% endif %}
-			<a href="/portfolios">Portfolios!</a>
-			<a href="/resumes">Resumes!</a>
-			<a href="/donate">Pay for my college!</a>
+			<a href="{{url_for(portfolios)}}">Portfolios!</a>
+			<a href="{{url_for(resumes)}}">Resumes!</a>
+			<a href="{{url_for(donate)}}">Pay for my college!</a>
 			<div class="login" style="float: right;">
-				<a href="/login">Log-in</a>
-				<a href="/regester">Regester</a>
+				<a href="{{url_for(login)}}">Log-in</a>
+				<a href="{{url_for(regester)}}">Regester</a>
 			</div>
 		</nav>
 		<hr>

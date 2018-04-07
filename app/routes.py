@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from app import app
 from app.forms import LoginForm
 
@@ -16,7 +16,7 @@ def login():
 			form.user.data,
 			form.remember_me.data
 		))
-		return redirect('/index')
+		return redirect('url_for(home)')
 	return render_template('login.html', title='Login', form=form)
 
 @app.route('/portfolios')
