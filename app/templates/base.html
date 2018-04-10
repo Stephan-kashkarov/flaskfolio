@@ -27,7 +27,7 @@
 			<a href="{{url_for('resumes')}}">Resumes!</a>
 			<a href="{{url_for('donate')}}">Pay for my college!</a>
 			<div class="login" style="float: right;">
-				{% if currnet_user.is_anonymous %}
+				{% if current_user.is_anonymous %}
 				<a href="{{url_for('login')}}">Log-in</a>
 				{% else %}
 				<a href="{{url_for('logout')}}"></a>
