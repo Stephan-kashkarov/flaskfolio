@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>
-	{% if name %}
-	Hi, {{ name }}
+	{% if current_user.name %}
+	Hi, {{ current_user.name }}
 	{% else %}
 	Welcome to my webiste!
 	{% endif %}
 <h2>
-
 <p>
-	<i> Create a Resume </i> <b> Click 'MAKE!' to start </b>
+	{% for post in posts %}
+	<li>
+		<p>
+			{{post.author}}:
+		</p>
+		<p>
+			{{ post.body}}
+		</p>
+	</li>
+	{% endfor %}
 </p>
-<button type="button" name="button" id="start_button">MAKE!</button>
 {% endblock %}

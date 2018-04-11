@@ -6,10 +6,12 @@ from app.forms import LoginForm
 
 @app.route('/')
 @app.route('/home')
-@login_required
 def home():
-	user = {'username': 'Admin'}
-	return render_template('index.html', title='Home', user=user)
+	posts = [
+	{'author': 'Admin', 'body': "hello, world!"},
+	{'author': 'Admin', 'body': "hello, again!"}
+	]
+	return render_template('index.html', title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -26,7 +28,6 @@ def login():
 	return render_template('login.html', title='Login', form=form)
 
 @app.route('/logout')
-@login_required
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
