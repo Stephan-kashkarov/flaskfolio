@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
-from app import app
+from app import app, db
 from app.models import User, Post
-from app.forms import LoginForm
+from app.forms import LoginForm, Regestation_form
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -27,18 +27,28 @@ def login():
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != "":
-			return url_for("index")
+			return url_for("home")
 		return redirect(next_page)
 	return render_template('login.html', title='Login', form=form)
 
 @app.route('/logout')
 def logout():
 	logout_user()
-	return redirect(url_for('index'))
+	return redirect(url_for('home'))
 
-@app.route('/regester')
+@app.route('/regester', methods=["GET", "POST"])
 def regester():
-	pass
+	if current_user.is_authenticated:
+		redirect(url_for('home'))
+	form = Regestation_form()
+	if form.validate_on_submit():
+		u = User(username=form.user.data, email=form.email.data)
+		u.set_password(form.password1.data)
+		db.session.add(u)
+		db.session.commit()
+		flash("You are now a regested user! hooray!")
+		redirect(url_for('login'))
+	return render_template('regester.html', title='Regester', form=form)
 
 @app.route('/portfolios')
 def portfolios():
