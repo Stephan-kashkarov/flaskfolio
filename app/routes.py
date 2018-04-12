@@ -42,8 +42,10 @@ def regester():
 		redirect(url_for('home'))
 	form = Regestation_form()
 	if form.validate_on_submit():
+		print('test')
 		u = User(username=form.user.data, email=form.email.data)
 		u.set_password(form.password1.data)
+		print("making user", form.user.data)
 		db.session.add(u)
 		db.session.commit()
 		flash("You are now a regested user! hooray!")

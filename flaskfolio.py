@@ -1,5 +1,6 @@
 from app import app, db
 from app.models import User, Post
+
 print(" Welcome To FlaskFolio ")
 
 @app.shell_context_processor

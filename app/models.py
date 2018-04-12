@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
 	email = db.Column(db.String(120), index=True, unique=True)
 	pass_hash = db.Column(db.String(128))
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
+	print('making user', username)
 
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
