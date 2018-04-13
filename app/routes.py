@@ -27,7 +27,7 @@ def login():
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != "":
-			return url_for("home")
+			return redirect(url_for('home'))
 		return redirect(next_page)
 	return render_template('login.html', title='Login', form=form)
 
@@ -36,21 +36,22 @@ def logout():
 	logout_user()
 	return redirect(url_for('home'))
 
-@app.route('/regester', methods=["GET", "POST"])
-def regester():
+@app.route('/register', methods=["GET", "POST"])
+def register():
 	if current_user.is_authenticated:
 		redirect(url_for('home'))
 	form = Regestation_form()
 	if form.validate_on_submit():
-		print('test')
 		u = User(username=form.user.data, email=form.email.data)
 		u.set_password(form.password1.data)
 		print("making user", form.user.data)
 		db.session.add(u)
 		db.session.commit()
-		flash("You are now a regested user! hooray!")
-		redirect(url_for('login'))
-	return render_template('regester.html', title='Regester', form=form)
+		flash("You are now a registed user! hooray!")
+		return redirect(url_for('login'))
+	else:
+		print("hi")
+	return render_template('register.html', title='Register', form=form)
 
 @app.route('/portfolios')
 def portfolios():

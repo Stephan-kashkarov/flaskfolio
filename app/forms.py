@@ -23,5 +23,5 @@ class Regestation_form(FlaskForm):
 
 	def validate_email(self, email):
 		check = User.query.filter_by(email=email.data)
-		if check is not None:
-			raise ValidationError("Email invalid or not taken")
+		if check is None:
+			raise ValidationError("Email invalid or taken")
