@@ -9,12 +9,10 @@ def load_user(id):
 	return User.query.get(int(id))
 
 class User(UserMixin, db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(64), index=True, unique=True)
+	user_id = db.Column(db.Integer, primary_key=True, nullable=False)
+	username = db.Column(db.String(30), index=True, unique=True, nullable=False)
 	email = db.Column(db.String(120), index=True, unique=True)
 	pass_hash = db.Column(db.String(128))
-	posts = db.relationship('Post', backref='author', lazy='dynamic')
-	print('making user', username)
 
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
@@ -25,12 +23,49 @@ class User(UserMixin, db.Model):
 	def check_password(self, password):
 		return check_password_hash(self.pass_hash, password)
 
-
-class Post(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	body = db.Column(db.String(140))
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class Resume(db.Model):
+	resume_id = db.Column(db.Integer, primary_key=True, nullable=False)
+	user_id = db.relationship(db.Integer, db.ForeignKey('User.user_id'), nullable=False)
 
 	def __repr__(self):
-		return "<Post {}>".format(self.body)
+		return "<User_id {}'s resume, id {}>".format(user_id, resume_id)
+
+class Reference(db.Model):
+	reference_id = db.Column(db.Integer, primary_key=True, nullable=False)
+	reference_name = db.Column(db.String(100))
+	title = db.Column(db.String(50))
+	company = db.Column(db.String(100))
+	phone = db.Column(db.Integer)
+	email = db.Column(db.String(100))
+
+	def __repr__(self):
+		return "<Reference: {} at {} who is a {}. Contact: phone, {} email, {}>"\
+		.format(reference_name, company, title, phone, email)
+
+class Experience(db.Model):
+	experience_id = db.Column(db.Integer, primary_key=True, nullable=False)
+	location = db.Column(db.String(100))
+	title = db.Column(db.String(100))
+	start_date = db.Column(db.DateTime)
+	end_date = db.Column(db.DateTime)
+
+	def __repr__(self):
+		return "<Experice: {} at {} from {} to {}>"\
+		.format(title, location, start_date, end_date)
+
+class Award(db.Model):
+	award_id = db.Column(db.Integer, primary_key=True, nullable=False)
+	award_name = db.Column(db.String(100))
+	award_date = db.Column(db.DateTime)
+
+class Awards(db.Model):
+	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
+	award_id = db.relationship(db.Integer, db.ForeignKey('Award.award_id'))
+
+class References(db.Model):
+	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
+	reference_id = db.relationship(db.Integer, db.ForeignKey('Reference.reference_id'))
+
+class Experiences(db.Model):
+	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
+	experience_id = db.relationship(db.Integer, db.ForeignKey('Experience.experience_id'))
