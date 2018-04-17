@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.models import User, Post
+from app.models import User, Resume, Reference, Experience, Award, Awards, References, Experiences
 from app.forms import LoginForm, Regestation_form
 from werkzeug.urls import url_parse
 
@@ -49,8 +49,6 @@ def register():
 		db.session.commit()
 		flash("You are now a registed user! hooray!")
 		return redirect(url_for('login'))
-	else:
-		print("hi")
 	return render_template('register.html', title='Register', form=form)
 
 @app.route('/portfolios')
@@ -64,3 +62,13 @@ def resumes():
 @app.route('/donate')
 def donate():
 	return render_template('donate.html', title='Donate')
+
+@app.route('/user/<username>')
+@login_required
+def profile(username):
+	user = User.query.filter_by(username=username).first_or_404()
+	if user:
+		resumes = Resume.query.filter_by(user_id=user.user_id).first_or_404()
+	else:
+		flash('User does not exist!')
+		redirect(url_for('home'))

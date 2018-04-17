@@ -25,7 +25,11 @@ class User(UserMixin, db.Model):
 
 class Resume(db.Model):
 	resume_id = db.Column(db.Integer, primary_key=True, nullable=False)
-	user_id = db.relationship(db.Integer, db.ForeignKey('User.user_id'), nullable=False)
+	user_id = db.relationship(db.Integer, db.ForeignKey('User.user_id'))
+	pinned = db.Column(db.Boolean)
+	references = db.relationship('references', backref='resume', lazy=True)
+	awards = db.relationship('awards', backref='resume', lazy=True)
+	experiences = db.relationship('experiences', backref='resume', lazy=True)
 
 	def __repr__(self):
 		return "<User_id {}'s resume, id {}>".format(user_id, resume_id)
@@ -59,13 +63,13 @@ class Award(db.Model):
 	award_date = db.Column(db.DateTime)
 
 class Awards(db.Model):
-	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
-	award_id = db.relationship(db.Integer, db.ForeignKey('Award.award_id'))
+	resume_id = db.Column(db.Integer, db.ForeignKey('resume.resume_id'), primary_key=True)
+	award_id = db.Column(db.Integer, db.ForeignKey('award.award_id'), primary_key=True)
 
 class References(db.Model):
-	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
-	reference_id = db.relationship(db.Integer, db.ForeignKey('Reference.reference_id'))
+	resume_id = db.Column(db.Integer, db.ForeignKey('resume.resume_id'), primary_key=True)
+	reference_id = db.Column(db.Integer, db.ForeignKey('reference.reference_id'), primary_key=True)
 
 class Experiences(db.Model):
-	resume_id = db.relationship(db.Integer, db.ForeignKey('Resume.resume_id'))
-	experience_id = db.relationship(db.Integer, db.ForeignKey('Experience.experience_id'))
+	resume_id = db.Column(db.Integer, db.ForeignKey('resume.resume_id'), primary_key=True)
+	experience_id = db.Column(db.Integer, db.ForeignKey('experience.experience_id'), primary_key=True)
